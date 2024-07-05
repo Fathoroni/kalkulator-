@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   StatusBar,
@@ -13,32 +13,50 @@ class App extends Component {
     this.state = {
       hasil: '',
       hitung: '',
+      time: new Date().toLocaleTimeString(),
     };
   }
 
+  componentDidMount() {
+    this.intervalID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
+
+  tick() {
+    this.setState({
+      time: new Date().toLocaleTimeString()
+    });
+  }
+
   masukanAngka = value => {
-    this.setState({hitung: this.state.hitung + value});
+    this.setState({ hitung: this.state.hitung + value });
   };
 
   hitungHasil = () => {
     try {
       const hasil = eval(this.state.hitung);
-      this.setState({hitung: String(hasil)});
+      this.setState({ hitung: String(hasil) });
     } catch (e) {
-      this.setState({hitung: 'Error'});
+      this.setState({ hitung: 'Error' });
     }
   };
 
   clearInput = () => {
-    this.setState({hitung: ''});
+    this.setState({ hitung: '' });
   };
 
   deleteLast = () => {
-    this.setState({hitung: this.state.hitung.slice(0, -1)});
+    this.setState({ hitung: this.state.hitung.slice(0, -1) });
   };
 
   renderButton = (label, onPress, flex = 1) => (
-    <TouchableOpacity style={[styles.button, {flex}]} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, { flex }]} onPress={onPress}>
       <Text style={styles.buttonText}>{label}</Text>
     </TouchableOpacity>
   );
@@ -50,6 +68,7 @@ class App extends Component {
 
         <View style={styles.display}>
           <Text style={styles.displayText}>{this.state.hitung}</Text>
+          <Text style={styles.timeText}>{this.state.time}</Text>
         </View>
 
         <View style={styles.buttonRow}>
@@ -104,6 +123,12 @@ const styles = StyleSheet.create({
   displayText: {
     color: '#102c57',
     fontSize: 70,
+  },
+  timeText: {
+    color: '#102c57',
+    fontSize: 20,
+    marginTop: 10,
+    alignSelf: 'flex-end',
   },
   buttonRow: {
     flexDirection: 'row',
