@@ -14,6 +14,7 @@ class App extends Component {
       hasil: '',
       hitung: '',
       time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString(),
     };
   }
 
@@ -30,7 +31,8 @@ class App extends Component {
 
   tick() {
     this.setState({
-      time: new Date().toLocaleTimeString()
+      time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString()
     });
   }
 
@@ -68,6 +70,7 @@ class App extends Component {
 
         <View style={styles.display}>
           <Text style={styles.displayText}>{this.state.hitung}</Text>
+          <Text style={styles.dateText}>{this.state.date}</Text>
           <Text style={styles.timeText}>{this.state.time}</Text>
         </View>
 
@@ -123,6 +126,12 @@ const styles = StyleSheet.create({
   displayText: {
     color: '#102c57',
     fontSize: 70,
+  },
+  dateText: {
+    color: '#102c57',
+    fontSize: 20,
+    marginTop: 10,
+    alignSelf: 'flex-end',
   },
   timeText: {
     color: '#102c57',
